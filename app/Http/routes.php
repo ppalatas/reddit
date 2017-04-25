@@ -13,7 +13,7 @@
 
 Route::get('/sayhello/{name?}', function($name = 'World')
 {
-    return 'Hello, $name!';
+    return "Hello, $name!";
 
 });
 
@@ -34,3 +34,30 @@ Route::get('/add', function($n =2, $number = 3)
 	return $n + $number;
 
 });
+
+Route::get('/sayhello/{name}', function($name)
+{
+    if ($name == "Chris") {
+        return Redirect::to('/');
+    }
+
+    $data = array('name' => $name);
+    return view('my-first-view', $data);
+});
+
+
+Route::get('/rolldice', function($roll)
+{
+	$roll = random(1, 6);
+	return "$roll";
+});
+
+
+
+
+
+
+
+
+
+
