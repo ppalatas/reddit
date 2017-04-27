@@ -17,7 +17,9 @@ class PostsController extends Controller
     public function index()
     {
         //
-        return "This will show the posts";
+        $posts = \App\Models\Post::paginate(4);
+        
+        return view('posts.index')->with('posts', $posts);
     }
 
     /**
@@ -39,13 +41,27 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+            //parameters for the inputs 
+        $rules = array(
+
+            'title'=> 'required|max:100',
+            'url'  => 'required'
+        );
+        // if()
+        $this->validate($request, $rules);
+
+
         //This creates a new object that can be saved in the database.
         $post = new \App\Models\Post;
         $post->title = $request->title;
         $post->content = $request->content;
+        $post->url = $request->url;
         $post->created_by = 1;
         $post->save();
-        return view('posts.create');
+
+
+        // redirect instead of view -- This is done because you are referencing only only table and index is listing 4 per page (as per the paginate).
+        return redirect()->action('PostsController@index');
     }
 
     /**
@@ -57,7 +73,9 @@ class PostsController extends Controller
     public function show($id)
     {
         //
-        return "Will show the new post by id";
+        $post = \App\Models\Post::find($id);
+
+        return view('posts.show')->with('posts', $post);
     }
 
     /**

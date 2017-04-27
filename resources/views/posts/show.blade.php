@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('master.layouts')
 
 @section('content')
 
@@ -6,7 +6,7 @@
 <form action="{{ action('PostsController@store') }}" method="POST">
 {!! csrf_field()!!}
 
-	<form action="posts/store">
+	<form action="posts/show">
 		<div class="form-group">
 			<label for="title">Title</label>
 			<input 
