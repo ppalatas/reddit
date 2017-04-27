@@ -1,0 +1,13 @@
+.inputClass
+{
+height: 200px;
+width: 300px;
+margin-left: 500px;
+margin-top: 150px;
+border-radius: 4px;
+}
+
+textarea 
+{
+    resize: none;
+}

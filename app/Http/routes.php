@@ -10,6 +10,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', function(){
+    return view('welcome');
+});
 
 Route::get('/sayhello/{name?}', function($name = 'World')
 {
@@ -53,7 +56,20 @@ Route::get('/rolldice', function($roll)
 });
 
 
+//CRUD OPS FOR POSTS
+// Route::get('/posts', 'PostsController@index');
+// Route::post('/posts/create', 'PostsController@create'); // shows form to create a post 
+// Route::get('/posts', 'PostsController@store'); // will save the new post
+// Route::get('/posts{posts}', 'PostsController@show'); // shows specific post by id 
+// Route::post('/post{posts}/edit', 'PostsController@edit'); // edit the post 
+// Route::post('/post{posts}', 'PostsController@update'); // update the post in the database 
+// Route::delete('post{posts}', 'PostsController@destroy'); // deletes the posts
 
+
+Route::resource('/posts', 'PostsController'); // A resource controller ^^^ Does the exact same thing as the CRUD operations above. 
+Route::resource('students', 'StudentsController');
+
+Route::resource('users', 'userController');
 
 
 
