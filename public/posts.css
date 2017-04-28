@@ -39,6 +39,13 @@ textarea
 	word-wrap: break-word;
 }
 
+
+.pageChoice
+{
+	height: 60px;
+	margin-left: 532px;
+}
+
 .datePosted
 {
 	margin-top: 10px;

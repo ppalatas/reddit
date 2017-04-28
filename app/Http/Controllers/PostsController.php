@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 
 class PostsController extends Controller
 {
@@ -17,7 +18,7 @@ class PostsController extends Controller
     public function index()
     {
         //
-        $posts = \App\Models\Post::paginate(4);
+        $posts = Post::paginate(4);
         
         return view('posts.index')->with('posts', $posts);
     }
@@ -41,13 +42,19 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+
+
             //parameters for the inputs 
         $rules = array(
 
             'title'=> 'required|max:100',
             'url'  => 'required'
         );
-        // if()
+        // if($post->save()){
+        //     $request->session()flash('SuccessMessage', 'You just posted!');
+        //     return redirect()->action('userController@show', $post->id);    
+        // }
+        
         $this->validate($request, $rules);
 
 
@@ -73,7 +80,7 @@ class PostsController extends Controller
     public function show($id)
     {
         //
-        $post = \App\Models\Post::find($id);
+        $post = Post::find($id);
 
         return view('posts.show')->with('posts', $post);
     }
@@ -87,7 +94,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         //querying the database to pull the information -- Then you create a variable so that you can use a foreach loop in your view page for a table etc. 
-        $post = \App\Models\Post::find($id);
+        $post = Post::find($id);
 
         // returns                      This info on the view of edit. 
         return view('posts.edit')->with('posts', $post);
@@ -103,7 +110,7 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $post = \App\Models\Post::find($id);
+        $post = Post::find($id);
 
         $post->title = $request->title;
         $post->content = $request->content;
@@ -121,7 +128,7 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //deletes the post and then redirects to the home/index view. 
-        $posts = \App\Models\Posts::find($id);
+        $posts = Posts::find($id);
         $posts = delete();
         return redirect()->action('postController@index');
     }
