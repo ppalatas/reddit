@@ -16,15 +16,24 @@ class userController extends Controller
      */
     public function index()
     {
-        //
+        return view('users.index');
 
     }
 
 
-    public function passwordConfirm()
+    public function login()
     {
+        $user = new \App\User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
 
+        if(($user->password === $request->password) && ($user->email === $request->email))
+        {
+            return redirect()->action('userController@home');
+        }
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,13 +59,14 @@ class userController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
+      
+
+      // move below to posts 
+      // if($post->save()){
+      //   $request->session()flash('SuccessMessage', 'You just posted!');
+      //       return redirect()->action('userController@show', $post->id);    
+      // }
         
-        if ($request->password === $request->passwordConfirm){
-            $user->save();
-            return redirect()->action('userController@index');    
-        } else {
-            echo "Your passwords didn't match, try again.";
-        }
     }
 
     /**
@@ -68,6 +78,11 @@ class userController extends Controller
     public function show($id)
     {
         //
+
+
+        if(!$student){
+            return redirect()->action('P')
+        }
     }
 
     /**

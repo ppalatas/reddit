@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="inputClass">
-	<form action="{{ action('PostsController@update', array(1)) }}" method="POST">
+	<form action="{{ action('PostsController@update', $post->id) }}" method="POST">
 		{!! csrf_field() !!}
 		{{ method_field('PUT')}}
 
@@ -21,6 +21,8 @@
 			<input 
 				type="text"
 				class="form-control"
+				cols="40" 
+	       		rows="5" 
 				id="content"
 				name="content"
 				value="{{old('content')}}"
@@ -36,7 +38,7 @@
 				value="{{old('url')}}"
 			>
 		</div>
-			<input type="submit" class="btn btn-default" value="create student">
+			<input type="submit" class="btn btn-default" value="create post">
 	</form>
 </div>
 @stop

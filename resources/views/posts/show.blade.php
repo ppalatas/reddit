@@ -1,45 +1,22 @@
-@extends('master.layouts')
+@extends('layouts.master')
 
 @section('content')
 
-<div class="inputClass">
-<form action="{{ action('PostsController@store') }}" method="POST">
-{!! csrf_field()!!}
-
-	<form action="posts/show">
-		<div class="form-group">
-			<label for="title">Title</label>
-			<input 
-				type="text"
-				class="form-control"
-				id="title"
-				name="title"
-				value="{{old('title')}}"
-			>
+<div class="showPost">
+	{!! csrf_field()!!}
+	<div class="postContainerHolder">
+		<div class="postContainer">
+			<h3>{{$post->title}}</h3>
+			<p class="postContent">{{ $post->content }}</p>
+			<h4>URL:</h4>
+			<p>{{ $post->url }}</p>
+			<p> Written at: {{ $post->created_at->diffForHumans() }}</p>
+			<a href="{{ action('PostsController@edit', $post->id) }}">Edit this post</a>
+			@if($post->created_at !== $post->updated_at)
+				<p> Edited at: </p>
+			@endif
+			<br>
 		</div>
-		<div class="form-group">
-			<label for="content">Content</label>
-			<textarea 
-				type="text"
-				cols="40" 
-       			rows="5" 
-				class="form-control"
-				id="content"
-				name="content"
-			>{{old('content')}}</textarea>
-		</div>
-		<div class="form-group">
-			<label for="url">Share your URL!</label>
-			<input 
-				type="text"
-				class="form-control"
-				id="url"
-				name="url"
-				value="{{old('url')}}"
-			>
-		</div>
-		<input type="submit" class="btn btn-default" value="create post">
-	</form>
-</form>
+	</div>
 </div>
 @stop

@@ -7,14 +7,22 @@
 	{!! csrf_field() !!}
 		
 		<div class="form-group">
-			<label for="name">Name</label>
+			<label for="email">Email</label>
 			<input 
 				type="text"
 				class="form-control"
-				id="name"
-				name="name"
-				value="{{old('name')}}"
+				id="email"
+				name="email"
+				value="{{old('email')}}"
 			>
 		</div>
+		<div class="form-group">
+			<label for="password">password</label>
+			<input
+				type="password"
+				class="form-control"
+				name="password"
+				id="password"
+				value="{{old('password')}}"
 	</form>
 </div>

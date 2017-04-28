@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Log;
 
 class PostsController extends Controller
 {
@@ -20,6 +21,7 @@ class PostsController extends Controller
         //
         $posts = Post::paginate(4);
         
+        
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -31,6 +33,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+        Log::info('The user just created a post.');
         return view('posts.create');
     }
 
@@ -66,6 +69,7 @@ class PostsController extends Controller
         $post->created_by = 1;
         $post->save();
 
+        Log::info("User id : $id just saved their post.");
 
         // redirect instead of view -- This is done because you are referencing only only table and index is listing 4 per page (as per the paginate).
         return redirect()->action('PostsController@index');
@@ -81,9 +85,15 @@ class PostsController extends Controller
     {
         //
         $post = Post::find($id);
+        if(!$post){
+            abort(404);
+            Log::info("404 Error");
+        }
 
-        return view('posts.show')->with('posts', $post);
+        return view('posts.show')->with('post', $post);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -95,9 +105,14 @@ class PostsController extends Controller
     {
         //querying the database to pull the information -- Then you create a variable so that you can use a foreach loop in your view page for a table etc. 
         $post = Post::find($id);
-
+        if(!$post){
+            abort(404);
+            Log::error("404 Error");
+        }
+        Log::info('The users edited a post.');
         // returns                      This info on the view of edit. 
-        return view('posts.edit')->with('posts', $post);
+        return view('posts.edit')->with('post', $post);
+        
     }
 
     /**
@@ -111,12 +126,17 @@ class PostsController extends Controller
     {
         //
         $post = Post::find($id);
+        if(!$post){
+            abort(404);
+            Log::error(" 404 Error");
+        }
 
         $post->title = $request->title;
         $post->content = $request->content;
         $post->created_by = 1;
         $post->save();
-        return view('posts.create');
+        Log::info("User id: $id updated some a post.");
+        return redirect()->action('PostsController@show', $post->id);
     }
 
     /**
@@ -128,8 +148,16 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //deletes the post and then redirects to the home/index view. 
-        $posts = Posts::find($id);
+        $post = Post::find($id);
+        
+        if(!$post){
+            abort(404);
+            Log::error("404 Error");
+        }
+
+        Log::info("User id : $id found post.");
         $posts = delete();
+        Log::info("User id : $id deleted post.");
         return redirect()->action('postController@index');
     }
 }
