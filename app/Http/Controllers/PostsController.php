@@ -16,6 +16,18 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        // we will force this authentication on everything except the index and show.
+        //middleware is a laravel function that -- allows you to create an array that fires before the code in each function index... It allows you to not have to type if validated/logged in before each function you want to use.
+        $this->middleware('auth', ['except' => ['index', 'show']]); 
+
+        // if you only want specific items as password protected 
+        // $this->middleware('auth', ['only' => ['create', 'store', 'update', 'edit, 'destroy']]);
+    }
+
+
     public function index()
     {
         //
@@ -112,7 +124,7 @@ class PostsController extends Controller
         Log::info('The users edited a post.');
         // returns                      This info on the view of edit. 
         return view('posts.edit')->with('post', $post);
-        
+
     }
 
     /**

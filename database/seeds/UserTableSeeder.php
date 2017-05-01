@@ -16,9 +16,8 @@ class UserTableSeeder extends Seeder
 	        $user = new User();
 	    	$user->email = $faker->email;
 	    	$user->name = $faker->name;
-	    	$user->password = Hash::make($faker->password);
+	    	$user->password = $faker->password; //-- Mutator takes over the hash hash::make($value/password)
 	    	$user->save();
     	}
     }
-
 }
