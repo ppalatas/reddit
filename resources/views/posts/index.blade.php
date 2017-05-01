@@ -2,9 +2,8 @@
 
 @section('content')
 
-	@foreach($posts as $post)
-
 <div class="postContainerHolder">
+@foreach($posts as $post)
 	<div class="postContainer">
 		<h3>{{$post->title}}</h3>
 		<p class="postContent">{{ $post->content }}</p>
@@ -16,8 +15,14 @@
 		@endif
 		<br>
 	</div>
+@endforeach
 </div>
-	@endforeach
+	<!-- auth::check == if someone is logged in .... do this else ... -->
+	@if(Auth::check())
+	
+		<div class="createPostBtn"><a href="{{ action('PostsController@create') }}"> Create a New Post!</div>
+		
+	@endif
 	
 	<div class="pageChoice">
 	<!-- used for the page selector -->

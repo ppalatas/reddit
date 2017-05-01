@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/posts.css">
 </head>
 <body>
+	@include('partials.navbar')
     @yield('content')
 </body>
 </html>

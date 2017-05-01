@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', function(){
-    return view('welcome');
+    return redirect('posts');
 });
 
 Route::get('/sayhello/{name?}', function($name = 'World')
@@ -56,6 +56,8 @@ Route::get('/rolldice', function($roll)
 });
 
 
+
+
 //CRUD OPS FOR POSTS
 // Route::get('/posts', 'PostsController@index');
 // Route::post('/posts/create', 'PostsController@create'); // shows form to create a post 
@@ -70,6 +72,15 @@ Route::resource('/posts', 'PostsController'); // A resource controller ^^^ Does 
 Route::resource('students', 'StudentsController');
 
 Route::resource('users', 'userController');
+
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
 

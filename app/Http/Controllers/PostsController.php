@@ -136,7 +136,7 @@ class PostsController extends Controller
         $post->created_by = 1;
         $post->save();
         Log::info("User id: $id updated some a post.");
-        return redirect()->action('PostsController@show', $post->id);
+        return view('posts.create');
     }
 
     /**

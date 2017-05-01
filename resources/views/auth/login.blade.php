@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@('content')
+@section('content')
 
 <div class="inputClass">
-	<form method="post" action="{{action('userController@getLogin')}}">
+	<form method="post" action="{{action('Auth\AuthController@getLogin')}}">
 	{!! csrf_field() !!}
 		
 		<div class="form-group">
@@ -28,3 +28,5 @@
 			<input type="submit" class="btn btn-primary" value="login">
 	</form>
 </div>
+
+@stop

@@ -23,6 +23,9 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+
+
+    protected $redirectPath = "/posts";
     /**
      * Create a new authentication controller instance.
      *
@@ -61,5 +64,22 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        
     }
 }
+
+    // protected function getlogin()
+    // {
+    //     $loggedInUser = Auth::user();
+    //     if($loggedInUser){
+    //         // Add a menu that appears when a user is logged in that allows the logged in user to create a new post.
+    //         return view()
+    //     } else {
+    //         return view('auth.login');
+    //     }
+    // }
+
+    // protected function getregister()
+    // {
+    //     return view('auth.register');
+    // }
