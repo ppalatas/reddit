@@ -68,12 +68,17 @@ Route::get('/rolldice', function($roll)
 // Route::delete('post{posts}', 'PostsController@destroy'); // deletes the posts
 
 
-Route::resource('/posts', 'PostsController'); // A resource controller ^^^ Does the exact same thing as the CRUD operations above. 
+Route::resource('/posts', 'PostsController');  // A resource controller ^^^ Does the exact same thing as the CRUD operations above. 
+
 Route::resource('students', 'StudentsController');
 
 Route::resource('users', 'userController');
 
+
+
 // Authentication routes...
+
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -81,6 +86,10 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+// Route::get('/posts', 'PostsController@store');
+
+// Route::get('/posts', 'PostsController@show');
 
 
 

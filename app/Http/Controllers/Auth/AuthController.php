@@ -25,7 +25,9 @@ class AuthController extends Controller
 
 
 
-    protected $redirectPath = "/posts";
+    protected $redirectPath = '/posts';
+
+    // protected $
     /**
      * Create a new authentication controller instance.
      *
@@ -62,24 +64,7 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-        
+            'password' => $data['password'],
+        ]);  
     }
 }
-
-    // protected function getlogin()
-    // {
-    //     $loggedInUser = Auth::user();
-    //     if($loggedInUser){
-    //         // Add a menu that appears when a user is logged in that allows the logged in user to create a new post.
-    //         return view()
-    //     } else {
-    //         return view('auth.login');
-    //     }
-    // }
-
-    // protected function getregister()
-    // {
-    //     return view('auth.register');
-    // }

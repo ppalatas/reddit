@@ -28,12 +28,26 @@ class PostsController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         //
-        $posts = Post::paginate(4);
+        $posts = Post::with('user')->paginate(4);
         
-        
+        if ($request->has('search')) { // isset($_REQUEST['search'])
+        // if ($request->search) {
+            // SELECT * FROM posts
+            // INNER JOIN users ON created_by = users.id
+            // WHERE title LIKE '%value%'
+            // OR name LIKE '%value%'
+            $posts = Post::join('users', 'created_by', '=', 'users.id')
+                ->where('title', 'LIKE', "%$request->search%")
+                ->orWhere('name', 'LIKE', "%$request->search%")
+                ->orderBy('created_by', 'ASC')
+                ->paginate(4); // query builder
+        } else {
+            $posts = Post::orderBy('created_by', 'ASC')->paginate(4);  // SELECT * FROM posts OFFSET 0 LIMIT  // paginator
+        }
+
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -63,7 +77,8 @@ class PostsController extends Controller
         $rules = array(
 
             'title'=> 'required|max:100',
-            'url'  => 'required'
+            'content'=> 'required',
+            'url'  => 'required',
         );
         // if($post->save()){
         //     $request->session()flash('SuccessMessage', 'You just posted!');
@@ -78,15 +93,21 @@ class PostsController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->url = $request->url;
-        $post->created_by = 1;
+        $post->created_by = $request->user()->id;
         $post->save();
 
-        Log::info("User id : $id just saved their post.");
+      
 
         // redirect instead of view -- This is done because you are referencing only only table and index is listing 4 per page (as per the paginate).
         return redirect()->action('PostsController@index');
     }
 
+
+    //Create a search bar for posts. 
+    public function search()
+    {
+
+    }
     /**
      * Display the specified resource.
      *
@@ -121,7 +142,14 @@ class PostsController extends Controller
             abort(404);
             Log::error("404 Error");
         }
-        Log::info('The users edited a post.');
+
+
+        // if($post->user->id != Auth::id()) {
+        //     Session::flash('errorMessage', "Only the post author can edit post.");
+        //     return redirect()->action('PostsController@index');
+        // }
+
+        // Log::info('The user edited a post.');
         // returns                      This info on the view of edit. 
         return view('posts.edit')->with('post', $post);
 
@@ -145,11 +173,22 @@ class PostsController extends Controller
 
         $post->title = $request->title;
         $post->content = $request->content;
-        $post->created_by = 1;
+        $post->created_by = \Auth::id();
         $post->save();
-        Log::info("User id: $id updated some a post.");
-        return view('posts.create');
+        // Log::info("User id: $id updated some a post.");
+        return redirect()->action('PostsController@index');
     }
+
+ public function vote(Request $request)
+    {
+        $vote = new \App\Models\Votes;
+        $vote->id = $request->title;
+        $vote->user_id = $request->user_id;
+        $vote->post_id = $request->post_id;
+        $vote->save();
+
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -170,6 +209,6 @@ class PostsController extends Controller
         Log::info("User id : $id found post.");
         $posts = delete();
         Log::info("User id : $id deleted post.");
-        return redirect()->action('postController@index');
+        return redirect()->action('PostsController@index');
     }
 }

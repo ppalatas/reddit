@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- <div class="inputClass"> -->
-	<form method="post" action="{{action('AuthController@postregister')}}">
+	<form method="post" action="{{action('AuthController@postRegister')}}">
 		{!! csrf_field() !!}
 		
 			<div class="form-group">

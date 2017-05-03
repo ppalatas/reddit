@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="inputClass">
-	<form method="post" action="{{action('Auth\AuthController@getLogin')}}">
+	<form method="post" action="{{action('Auth\AuthController@postLogin')}}">
 	{!! csrf_field() !!}
 		
 		<div class="form-group">
