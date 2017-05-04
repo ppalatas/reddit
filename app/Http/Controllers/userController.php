@@ -20,20 +20,6 @@ class userController extends Controller
 
     }
 
-
-    // public function login()
-    // {
-    //     $user = new \App\User;
-    //     $user->name = $request->name;
-    //     $user->email = $request->email;
-    //     $user->password = $request->password;
-
-    //     if(($user->password === $request->password) && ($user->email === $request->email))
-    //     {
-    //         return redirect()->action('userController@home');
-    //     }
-    // }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -60,13 +46,6 @@ class userController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
       
-
-      // move below to posts 
-      // if($post->save()){
-      //   $request->session()flash('SuccessMessage', 'You just posted!');
-      //       return redirect()->action('userController@show', $post->id);    
-      // }
-        
     }
 
     /**

@@ -6,26 +6,30 @@
 	
 		<div class="createPostBtn"><a href="{{ action('PostsController@create') }}"> Create a New Post!</a></div>
 	@endif
-	<div class="postContainerHolder">
 	@foreach($posts as $post)
+	<div class="postContainerHolder">
 		<div class="postContainer">
-			<p> Written at: {{ $post->created_at->diffForHumans() }}</p>
+			<p class="writtenBy"> Written By: <br><h4>{{ $post->user->name }}</h4></p>
+			<p> At: {{ $post->created_at->diffForHumans() }}</p>
 			<h3><a href=" {{ action('PostsController@show', $post->id) }}">{{$post->title}}</a></h3>
 			<p class="postContent">{{ $post->content }}</p>
-			<div class="likesBox">
-				<div class="like"></div>
-				<div class="boo"></div>
-			</div>
 			<h4>URL:</h4>
 			<p>{{ $post->url }}</p>
-			<p> Written By: {{ $post->user->name }}</p>
+			<div class="likesBox">
+				<form method="post" action="{{ action('PostsController@vote', $post->id) }}">
+					{!! csrf_field() !!}
+					<button class="like" name="vote" value="1"></button>
+					<button class="boo" name="vote" value="-1"></button>
+				</form>
+			</div>
+			<p class="votes">Votes: {{ $post->getVotes() }} </p>
 			@if($post->created_at !== $post->updated_at)
-				<p> Edited at: {{ $post->updated_at }}</p>
+				<p class="edited"> Edited at: <em>{{ $post->updated_at }}</em></p>
 			@endif
 			<br>
 		</div>
-	@endforeach
 	</div>
+	@endforeach
 	<!-- auth::check == if someone is logged in .... do this else ... -->
 	
 	<div class="pageChoice">
@@ -34,5 +38,7 @@
 	</div>
 
 	<!-- Output the information for the post on the page -->
+
+	<!-- model for voting, linking foreign keys to post because each post has a voting option  -->
 
 @stop

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Log;
+use Auth;
+use App\User;
+use App\Models\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use Log;
 
 class PostsController extends Controller
 {
@@ -144,13 +146,7 @@ class PostsController extends Controller
         }
 
 
-        // if($post->user->id != Auth::id()) {
-        //     Session::flash('errorMessage', "Only the post author can edit post.");
-        //     return redirect()->action('PostsController@index');
-        // }
-
-        // Log::info('The user edited a post.');
-        // returns                      This info on the view of edit. 
+       //Info on the view of edit. 
         return view('posts.edit')->with('post', $post);
 
     }
@@ -173,21 +169,23 @@ class PostsController extends Controller
 
         $post->title = $request->title;
         $post->content = $request->content;
-        $post->created_by = \Auth::id();
+        $post->created_by = Auth::id();
         $post->save();
-        // Log::info("User id: $id updated some a post.");
+
         return redirect()->action('PostsController@index');
     }
 
- public function vote(Request $request)
-    {
-        $vote = new \App\Models\Votes;
-        $vote->id = $request->title;
-        $vote->user_id = $request->user_id;
-        $vote->post_id = $request->post_id;
-        $vote->save();
 
-    }
+    public function vote(Request $request, $id)
+        {
+            $vote = new \App\Models\Votes;
+            $vote->user_id = Auth::id();
+            $vote->post_id = $id;
+            $vote->vote = $request->vote;
+            $vote->save();
+
+            return redirect()->action('PostsController@index');
+        }
 
 
     /**

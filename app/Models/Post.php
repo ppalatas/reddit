@@ -16,13 +16,20 @@ class Post extends BaseModel
 
     // function name is a singular since each post belongs to ONE user...
     public function user()
-		{
-			// links the foreign keys together 
-			return $this->belongsTo('App\User', 'created_by');
-		}
+	{
+		// links the foreign keys together 
+	    return $this->belongsTo('App\User', 'created_by');
+	}
 
     public function votes()
     {
-        return $this->hasMany('App\Models\votes', 'id');
+        return $this->hasMany('App\Models\Votes', 'post_id');
+    }
+
+    public function getVotes()
+    {
+        return $this->votes->sum('vote');
+
+
     }
 }

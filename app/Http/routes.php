@@ -67,6 +67,7 @@ Route::get('/rolldice', function($roll)
 // Route::post('/post{posts}', 'PostsController@update'); // update the post in the database 
 // Route::delete('post{posts}', 'PostsController@destroy'); // deletes the posts
 
+Route::post('posts/vote/{id}', 'PostsController@vote');
 
 Route::resource('/posts', 'PostsController');  // A resource controller ^^^ Does the exact same thing as the CRUD operations above. 
 
@@ -87,9 +88,6 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-// Route::get('/posts', 'PostsController@store');
-
-// Route::get('/posts', 'PostsController@show');
 
 
 
